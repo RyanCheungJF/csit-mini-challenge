@@ -41,5 +41,5 @@ def read_flight(departure_date: str, return_date: str, destination: str):
                 "Return Price": r.get("price", "NA"),
             }
             response.append(hm)
-
+            
     return response

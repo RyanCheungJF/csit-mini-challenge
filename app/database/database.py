@@ -1,3 +1,5 @@
+import os
+
 from decouple import config
 from flask import current_app, g
 from flask_pymongo import PyMongo
@@ -8,7 +10,7 @@ def get_db():
     """Sets or returns the database instance.
 
     Returns:
-        db: Database object
+        Database: Database object
     """
     # g is the global context in Flask
     db = getattr(g, "_database", None)
@@ -16,7 +18,8 @@ def get_db():
         # set it as an attribute under g if it hasn't been set
         db = g._database = PyMongo(
             current_app,
-            uri=config("MONGO_URI"),
+            # for image, then for local
+            uri=os.getenv("DBURI", config("MONGO_URI")),
         ).db
     return db
 
